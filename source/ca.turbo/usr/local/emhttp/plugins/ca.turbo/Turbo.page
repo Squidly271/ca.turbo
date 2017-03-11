@@ -1,0 +1,145 @@
+Menu="CA"
+Title="TurboWrite"
+Icon="turbo.png"
+---
+<?
+$plugin = "ca.turbo";
+
+function getPluginSettings() {
+  $settings = @parse_ini_file("/usr/local/emhttp/plugins/ca.turbo/default.ini");
+  $userSettings = @parse_ini_file("/boot/config/plugins/ca.turbo/settings.ini");
+  
+  $userKeys = array_keys($userSettings);
+  foreach ($userKeys as $key) {
+    $settings[$key] = $userSettings[$key];
+  }
+  return $settings;
+}
+
+$cfg = getPluginSettings();
+
+$unRaidDisks = parse_ini_file("/var/local/emhttp/disks.ini",true);
+foreach ($unRaidDisks as $disk) {
+  if ( (strpos($disk['name'],"disk") === 0 ) && ($disk['size']) ) {
+    $totalDisks++;
+  }
+}
+?>
+
+<script>
+var URL = "/plugins/ca.turbo/include/exec.php";
+
+$(function() {
+  <?$keys = array_keys($cfg);?>
+  <?foreach($keys as $key):?>
+    $('#<?=$key?>').val("<?=$cfg[$key]?>");
+  <?endforeach;?>
+  
+  setInterval(function() {
+    $.post(URL,{action:'status'},function(data) {
+      if (data) {
+        $("#miscScript").html(data);
+      }
+    });
+  },3000);
+});
+
+function changeApply() {
+  var enabled = $("#enabled").val();
+  if ( enabled == "no" ) {
+    $(".settings").each(function() {
+      $(this).prop("disabled",true);
+    });
+  } else {
+    $(".settings").each(function() {
+      $(this).prop("disabled",false);
+    });
+  }
+  $("#enabled").prop("disabled",false);
+  $("#applyButton").prop("disabled",false);
+}
+
+function getSettings() {
+  var settings = new Array();
+  
+  $(".settings").each(function() {
+    var id = $(this).attr("id");
+    var set = $(this).val();
+    var newSetting = new Array(id,set);
+    settings.push(newSetting);
+  });
+  return settings;
+}
+    
+function applySettings() {
+  var settings = getSettings();
+  
+  $.post(URL,{action:'apply',settings:settings},function(data) {
+    if (data) {
+      $("#applyButton").prop("disabled",true);
+      $("#debugging").html(data);
+    }
+  });
+}
+</script>
+
+> help
+
+<dl>
+<dt>Enable Automatic Turbo Mode:</dt>
+<dd>
+<select class='settings' id='enabled' onchange='changeApply();'>
+  <option value='no'>No</option>
+  <option value='yes'>Yes</option>
+</select>
+</dd>
+</dl>
+
+> Enable Or Disable This Plugin
+
+<dl>
+<dt>Disks Allowed To Be Spun Down Before Invoking Turbo Mode:</dt>
+<dd>
+<select class='settings' id='maxSpunDown' onchange='changeApply();'>
+<?for($i=0; $i <= 10; $i++):?>
+  <?$number = $i == 0 ? "Zero" : $i?>
+  <option value="<?=$i?>"><?=$number?></option>
+<?endfor;?>
+</select>
+</dd>
+</dl>
+
+> If the number of <em>data</em> disks spun down exceeds this number, then normal write method (read/modify/write) will be invoked, otherwise turbo mode (reconstruct write) will be invoked.
+
+<dl>
+<dt>Polling Time In Seconds:</dt>
+<dd>
+<input class='settings' type='number' id='pollingTime' onchange='changeApply();'>
+</dd>
+</dl>
+
+> Amount of time in <em>seconds</em> between checking if the drives are spinning or not
+
+<dl>
+<dt>Additional Debugging Logging</dt>
+<dd>
+<select class='settings' id='debug' onchange='changeApply();'>
+  <option value='true'>Yes</option>
+  <option value='false'>No</option>
+</select>
+</dd>
+</dl>
+
+> Enable for additional debugging information to be logged
+
+<input type='button' onclick='applySettings();' value='Apply' id='applyButton'><input type='button' onclick='done();' value='Done'>
+<span id='debugging'></span>
+<br><br>
+<b>Current Status:</b>
+<dl>
+<dt>Data Drives Spun Down:</dt>
+<dd><span id='spunDown'><font color='red'>Script Not Running</font></span></dd>
+<dt>Turbo Mode Enabled:</dt>
+<dd><span id='turboOn'><font color='red'>Script Not Running</font></span></dd>
+</dl>
+<span id='miscScript'></span>

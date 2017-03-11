@@ -1,0 +1,4 @@
+#!/bin/bash
+cd source/ca.turbo
+pkg_build.sh
+
