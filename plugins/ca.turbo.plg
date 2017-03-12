@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.03.11">
-<!ENTITY md5       "fe11169d365191d3c288af3cedb40714">
+<!ENTITY version   "2017.03.11a">
+<!ENTITY md5       "d18e3c26411416e3300792a4c80c9611">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">

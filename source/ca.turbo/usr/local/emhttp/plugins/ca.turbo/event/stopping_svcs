@@ -12,5 +12,6 @@ if [[ -e /tmp/ca.turbo/PID ]]
   PID=`cat /tmp/ca.turbo/PID`
   logger "Terminating $PID"
   kill $PID
+  rm /tmp/ca.turbo/PID
 fi
 
