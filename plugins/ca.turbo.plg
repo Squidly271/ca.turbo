@@ -59,9 +59,8 @@ The 'post-install' script
 -->
 <FILE Run="/usr/bin/php">
 <INLINE>
-<?PHP
-$version = &version;
 <![CDATA[
+<?
   exec("mkdir -p /tmp/ca.turbo");
   if ( is_file("/tmp/ca.turbo/PID") ) {
     echo "Stopping CA Auto Turbo Mode\n";
@@ -78,15 +77,19 @@ $version = &version;
   echo "\n";
   echo "----------------------------------------------------\n";
   echo " &name; has been installed.\n";
-  echo " Copyright 2015-2016, Andrew Zawadzki\n";
+  echo " Copyright 2017, Andrew Zawadzki\n";
   echo " Version: &version; blah $version\n";
   echo "----------------------------------------------------\n";
   echo "\n";
-]]>
 ?>
+]]>
 </INLINE>
 </FILE>
-
+<FILE Run="/bin/bash">
+<INLINE>
+echo "finished installing"
+</INLINE>
+</FILE>
 <!--
 The 'remove' script.
 -->
