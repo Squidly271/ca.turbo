@@ -3,7 +3,7 @@
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
 <!ENTITY version   "2017.03.11">
-<!ENTITY md5       "ff506a85658b93a8b4a5625c8b94b6f2">
+<!ENTITY md5       "14a43d38dfc9efb96bcd889d3af3e792">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
