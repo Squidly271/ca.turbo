@@ -3,7 +3,7 @@
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
 <!ENTITY version   "2017.03.11">
-<!ENTITY md5       "14a43d38dfc9efb96bcd889d3af3e792">
+<!ENTITY md5       "a16345d0e51b66c0977bf30d20c801c8">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -61,6 +61,7 @@ The 'post-install' script
 <INLINE>
 <![CDATA[
 <?
+  echo "Checking for running background process\n";
   exec("mkdir -p /tmp/ca.turbo");
   if ( is_file("/tmp/ca.turbo/PID") ) {
     echo "Stopping CA Auto Turbo Mode\n";
@@ -74,25 +75,36 @@ The 'post-install' script
     );
     proc_open("/usr/local/emhttp/plugins/ca.turbo/scripts/auto_turbo.php",$descriptorspec,$pipes);
   }
-  echo "\n";
-  echo "----------------------------------------------------\n";
-  echo " &name; has been installed.\n";
-  echo " Copyright 2017, Andrew Zawadzki\n";
-  echo " Version: &version; blah $version\n";
-  echo "----------------------------------------------------\n";
-  echo "\n";
 ?>
 ]]>
 </INLINE>
 </FILE>
 <FILE Run="/bin/bash">
 <INLINE>
-echo "finished installing"
+  echo ""
+  echo "----------------------------------------------------"
+  echo " &name; has been installed."
+  echo " Copyright 2017, Andrew Zawadzki"
+  echo " Version: &version;"
+  echo "----------------------------------------------------"
+  echo ""
 </INLINE>
 </FILE>
 <!--
 The 'remove' script.
 -->
+<FILE Run="/usr/bin/php" Method="remove">
+<INLINE>
+<![CDATA[
+<?
+  echo "Resetting Write Method to unRaid settings\n";
+  $unRaidVars = parse_ini_file("/var/local/emhttp/var.ini");
+  exec("/usr/local/sbin/mdcmd set md_write_method ".$unRaidVars['md_write_method']);
+?>
+]]>
+</INLINE>
+</FILE>
+
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 if [[ -e /tmp/ca.turbo/PID ]]
