@@ -46,7 +46,9 @@ switch ($_POST['action']) {
     echo "Settings Updated";
     break;
   case 'status':
-    $status = readJsonFile($turboPaths['status']);
+    if ( is_file($turboPaths['backgroundPID']) ) {
+      $status = readJsonFile($turboPaths['status']);
+    }
     if ( ! $status ) {
       $unRaidVars = parse_ini_file("/var/local/emhttp/var.ini");
       if ($unRaidVars['md_write_method'] == "1") {

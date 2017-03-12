@@ -12,6 +12,7 @@ require_once("/usr/local/emhttp/plugins/ca.turbo/include/paths.php");
 
 $settings = getPluginSettings();
 if ($settings['enabled'] == "yes") {
+  logger("Starting CA Auto Turbo Mode");
   $descriptorspec = array(
     0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
     1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
