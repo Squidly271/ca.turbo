@@ -124,7 +124,7 @@ function myAlert(description,textdescription,textimage,imagesize, outsideClick, 
 </script>
 
 <span id='update' hidden><font color='red'>An update to this plugin is available</font><br><br></span>
-<strong>CA Auto Turbo Mode will enable / disable <em>Turbo Write Mode (reconstruct write)</em> based upon the number of hard drives currently spun down.  For a good explanation of turbo write mode, see <a href='https://forums.lime-technology.com/topic/50397-turbo-write/#comment-496144'>HERE</a><br></strong>
+<strong><font color='purple' size='3'>CA Auto Turbo Write Mode</font> will enable / disable <em>Turbo Write Mode (reconstruct write)</em> based upon the number of hard drives currently spun down.  For a good explanation of turbo write mode, see <a href='https://forums.lime-technology.com/topic/50397-turbo-write/#comment-496144' target='_blank'>HERE</a><br></strong>
 
 > Note that certain hardware combinations may actually result in lower speeds when utilizing Turbo (reconstruct) mode
 
