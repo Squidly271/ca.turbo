@@ -74,6 +74,7 @@ function changeApply() {
   }
   $("#enabled").prop("disabled",false);
   $("#applyButton").prop("disabled",false);
+  $("#debugging").html("You need to Apply the changes to take effect");
 }
 
 function getSettings() {
