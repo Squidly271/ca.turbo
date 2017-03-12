@@ -1,4 +1,11 @@
 <?PHP
+###################################
+#                                 #
+# CA Automatic Turbo Mode         #
+# Copyright 2017, Andrew Zawadzki #
+#                                 #
+###################################
+
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/helpers.php");
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/paths.php");
 

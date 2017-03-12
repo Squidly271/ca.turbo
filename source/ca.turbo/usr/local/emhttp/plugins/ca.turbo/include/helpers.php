@@ -1,4 +1,10 @@
 <?PHP
+###################################
+#                                 #
+# CA Automatic Turbo Mode         #
+# Copyright 2017, Andrew Zawadzki #
+#                                 #
+###################################
 
 function getSettings($rawSettings) {
   foreach ($rawSettings as $set) {

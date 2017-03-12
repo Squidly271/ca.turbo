@@ -1,4 +1,11 @@
 #!/bin/bash
+###################################
+#                                 #
+# CA Automatic Turbo Mode         #
+# Copyright 2017, Andrew Zawadzki #
+#                                 #
+###################################
+
 if [[ -e /tmp/ca.turbo/PID ]]
  then
   logger "Stopping CA Turbo Mode"
