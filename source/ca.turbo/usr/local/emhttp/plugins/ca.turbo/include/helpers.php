@@ -38,7 +38,9 @@ function create_ini_file($settings,$mode=false) {
 function getPluginSettings() {
   $settings = @parse_ini_file("/usr/local/emhttp/plugins/ca.turbo/default.ini");
   $userSettings = @parse_ini_file("/boot/config/plugins/ca.turbo/settings.ini");
-  
+  if ( !$userSettings ) {
+    $userSettings = array();
+  }
   $userKeys = array_keys($userSettings);
   foreach ($userKeys as $key) {
     $settings[$key] = $userSettings[$key];
@@ -63,5 +65,14 @@ function readJsonFile($filename) {
 
 function writeJsonFile($filename,$jsonArray) {
   file_put_contents($filename,json_encode($jsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+}
+
+# Functions to set normal / turbo mode
+
+function setTurbo() {
+  exec("/usr/local/sbin/mdcmd set md_write_method 1");
+}
+function setNormal() {
+  exec("/usr/local/sbin/mdcmd set md_write_method 0");
 }
 ?>

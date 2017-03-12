@@ -8,7 +8,9 @@ $plugin = "ca.turbo";
 function getPluginSettings() {
   $settings = @parse_ini_file("/usr/local/emhttp/plugins/ca.turbo/default.ini");
   $userSettings = @parse_ini_file("/boot/config/plugins/ca.turbo/settings.ini");
-  
+  if ( ! $userSettings ) {
+    $userSettings = array();
+  }
   $userKeys = array_keys($userSettings);
   foreach ($userKeys as $key) {
     $settings[$key] = $userSettings[$key];
@@ -102,7 +104,7 @@ function applySettings() {
 <dd>
 <select class='settings' id='maxSpunDown' onchange='changeApply();'>
 <?for($i=0; $i <= 10; $i++):?>
-  <?$number = $i == 0 ? "Zero" : $i?>
+  <?$number = $i == 0 ? "0" : $i?>
   <option value="<?=$i?>"><?=$number?></option>
 <?endfor;?>
 </select>

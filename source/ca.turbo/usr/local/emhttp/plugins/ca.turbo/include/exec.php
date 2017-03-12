@@ -16,6 +16,9 @@ switch ($_POST['action']) {
         posix_kill($PID,SIGKILL);
         @unlink($turboPaths['backgroundPID']);
         @unlink($turboPaths['status']);
+        logger("Setting write method to unRaid defined");
+        $unRaidVars = parse_ini_file("/var/local/emhttp/var.ini");
+        exec("/usr/local/sbin/mdcmd set md_write_method ".$unRaidVars['md_write_method']);
       }
     }
     if ( $settings['enable'] == 'yes' ) {
@@ -23,6 +26,7 @@ switch ($_POST['action']) {
         logger("Stopping Auto Turbo");
         $PID = file_get_contents($turboPaths['backgroundPID']);
         posix_kill($PID,SIGKILL);
+        
       }
       logger("Starting Auto Turbo");
       exec("/usr/local/emhttp/plugins/ca.turbo/scripts/startBackground.sh");
@@ -31,9 +35,15 @@ switch ($_POST['action']) {
     break;
   case 'status':
     $status = readJsonFile($turboPaths['status']);
-    if ( ! $status ) { return; }
+    if ( ! $status ) {
+      $unRaidVars = parse_ini_file("/var/local/emhttp/var.ini");
+      if ($unRaidVars['md_write_method'] == "1") {
+        $status['mode'] = "turbo";
+      }
+    }
+    $spunDown = ( $status ) ? $status['spundown'] : "<font color=red>Script Not Running</font>";
     $o = "<script>";
-    $o .= "  $('#spunDown').html('{$status['spundown']}');";
+    $o .= "  $('#spunDown').html('$spunDown');";
     $msg = ($status['mode'] == "turbo") ? "Turbo (Reconstruct Write)" : "Normal (Read/Modify/Write)";
     $o .= "  $('#turboOn').html('$msg');";
     if ( is_file($turboPaths['backgroundPID']) ) {

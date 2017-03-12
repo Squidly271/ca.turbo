@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p /tmp/ca.turbo
+/usr/local/emhttp/plugins/ca.turbo/scripts/arrayStarted.php
+

@@ -1,5 +1,12 @@
 #!/usr/bin/php
 <?PHP
+###################################
+#                                 #
+# CA Automatic Turbo Mode         #
+# Copyright 2017, Andrew Zawadzki #
+#                                 #
+###################################
+
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/helpers.php");
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/paths.php");
 
@@ -19,6 +26,8 @@ function getUnraidDisks() {
   }
 }
 
+# Function to get the valid disks
+
 function getDisks() {
   global $unRaidDisks;
   
@@ -33,6 +42,13 @@ function getDisks() {
   return $validDisks;
 }
 
+################
+################
+##            ##     
+## BEGIN MAIN ##
+##            ##
+################
+################
 
 $settings = getPluginSettings();
 $debug = ($settings['debug'] == "true");
@@ -40,11 +56,15 @@ $debug = ($settings['debug'] == "true");
 if ($settings['enabled'] != "yes") return;
 if ( is_file($turboPaths['backgroundPID']) ) {
   logger("Auto Turbo Mode Background process is already running!");
-#  return;
+  if ($debug) {
+    logger("Auto Turbo Mode Background process is already running (PID: ".file_get_contents($turboPaths['backgroundPID']));
+  }
+  return;
 }
 
 exec("mkdir -p /tmp/ca.turbo/");
-file_put_contents($turboPaths['backgroundPID'],getmypid());
+$MyPID = getmypid();
+file_put_contents($turboPaths['backgroundPID'],"$MyPID");
 
 while (true) {
   getUnraidDisks();
@@ -68,6 +88,7 @@ while (true) {
       if ( $debug ) {
         logger("Entering Normal Mode");
       }
+      setNormal();
       $currentMode = "normal";
     }
   } else {
@@ -76,13 +97,24 @@ while (true) {
       if ( $debug ) {
         logger("Entering Turbo Mode");
       }
+      setTurbo();
       $currentMode = "turbo";
     }
   }
   $status['spundown'] = $totalSpunDown;
   $status['mode'] = $currentMode;
   writeJsonFile($turboPaths['status'],$status); 
+  sleep($settings['pollingTime']);
+  # if PID file no longer exists (or is a different PID), stop the process
+  $testPID = @file_get_contents($turboPaths['backgroundPID']);
+  if ( $testPID != $MyPID ) {
+    break;
+  }
 }
-
+# reset write mode to unRaid's setting
+$unRaidVars = parse_ini_file("/var/local/emhttp/var.ini");
+exec("/usr/local/sbin/mdcmd set md_write_method ".$unRaidVars['md_write_method']);
+@unlink($turboPaths['backgroundPID']);
+@unlink($turboPaths['status']);
 
 ?>

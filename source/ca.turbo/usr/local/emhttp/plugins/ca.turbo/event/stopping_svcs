@@ -1,0 +1,9 @@
+#!/bin/bash
+if [[ -e /tmp/ca.turbo/PID ]]
+ then
+  logger "Stopping CA Turbo Mode"
+  PID=`cat /tmp/ca.turbo/PID`
+  logger "Terminating $PID"
+  kill $PID
+fi
+
