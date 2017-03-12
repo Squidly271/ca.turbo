@@ -9,7 +9,7 @@ switch ($_POST['action']) {
     
     exec("mkdir -p /boot/config/plugins/ca.turbo");
     file_put_contents("/boot/config/plugins/ca.turbo/settings.ini",create_ini_file($settings));
-    if ( $settings['enable'] == 'no' ) {
+    if ( $settings['enabled'] == 'no' ) {
       if ( is_file($turboPaths['backgroundPID']) ) {
         logger("Stopping Auto Turbo");
         $PID = file_get_contents($turboPaths['backgroundPID']);
@@ -21,15 +21,26 @@ switch ($_POST['action']) {
         exec("/usr/local/sbin/mdcmd set md_write_method ".$unRaidVars['md_write_method']);
       }
     }
-    if ( $settings['enable'] == 'yes' ) {
+    if ( $settings['enabled'] == 'yes' ) {
       if ( is_file($turboPaths['backgroundPID']) ) {
         logger("Stopping Auto Turbo");
         $PID = file_get_contents($turboPaths['backgroundPID']);
         posix_kill($PID,SIGKILL);
-        
+        @unlink($turboPaths['backgroundPID']);
       }
       logger("Starting Auto Turbo");
-      exec("/usr/local/emhttp/plugins/ca.turbo/scripts/startBackground.sh");
+      sleep(5);
+#      exec("/usr/local/emhttp/plugins/ca.turbo/scripts/startBackground.sh  & > /dev/null | at NOW -M >/dev/null 2>&1");
+$descriptorspec = array(
+   0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+   1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+   2 => array("file", "/tmp/error-output.txt", "a") // stderr is a file to write to
+);
+proc_open("/usr/local/emhttp/plugins/ca.turbo/scripts/auto_turbo.php",$descriptorspec,$pipes);
+
+
+
+
     }        
     echo "Settings Updated";
     break;

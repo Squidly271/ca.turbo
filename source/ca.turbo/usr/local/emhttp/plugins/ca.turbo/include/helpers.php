@@ -49,8 +49,12 @@ function getPluginSettings() {
 }
 
 function logger($string) {
+  global $debug;
+  
   exec("logger ".escapeshellarg($string));
-  echo "$string\n";
+  if ($debug) {
+    echo "$string\n";
+  }
 }
 
 ##################################################################
