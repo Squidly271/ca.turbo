@@ -1,10 +1,18 @@
 Menu="CA"
 Title="TurboWrite"
-Icon="turbo.png"
+Icon="ca.turbo.png"
 ---
 <?
+###################################
+#                                 #
+# CA Automatic Turbo Mode         #
+# Copyright 2017, Andrew Zawadzki #
+#                                 #
+###################################
+
 $plugin = "ca.turbo";
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/caCredits.php");
+
 $installedVersion = exec("/usr/local/emhttp/plugins/dynamix.plugin.manager/scripts/plugin version /var/log/plugins/ca.turbo.plg");
 if ( is_file("/tmp/plugins/community.applications.plg") ) {
   $upgradeVersion = exec("/usr/local/emhttp/plugins/dynamix.plugin.manager/scripts/plugin version /tmp/plugins/ca.turbo.plg");
