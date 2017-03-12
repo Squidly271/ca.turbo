@@ -4,7 +4,13 @@ Icon="turbo.png"
 ---
 <?
 $plugin = "ca.turbo";
-
+require_once("/usr/local/emhttp/plugins/ca.turbo/include/caCredits.php");
+$installedVersion = exec("/usr/local/emhttp/plugins/dynamix.plugin.manager/scripts/plugin version /var/log/plugins/ca.turbo.plg");
+if ( is_file("/tmp/plugins/community.applications.plg") ) {
+  $upgradeVersion = exec("/usr/local/emhttp/plugins/dynamix.plugin.manager/scripts/plugin version /tmp/plugins/ca.turbo.plg");
+} else {
+  $upgradeVersion = "0";
+}
 function getPluginSettings() {
   $settings = @parse_ini_file("/usr/local/emhttp/plugins/ca.turbo/default.ini");
   $userSettings = @parse_ini_file("/boot/config/plugins/ca.turbo/settings.ini");
@@ -32,6 +38,7 @@ foreach ($unRaidDisks as $disk) {
 var URL = "/plugins/ca.turbo/include/exec.php";
 
 $(function() {
+  if ( "<?=$installedVersion?>" < "<?=$upgradeVersion?>" ) { $('#update').show(); }
   <?$keys = array_keys($cfg);?>
   <?foreach($keys as $key):?>
     $('#<?=$key?>').val("<?=$cfg[$key]?>");
@@ -83,9 +90,34 @@ function applySettings() {
     }
   });
 }
+
+function showCredits() {
+  myAlert("CA Auto Turbo Mode","<?=$caCredits?>","/plugins/<?=$plugin?>/images/turbo.png","40x40", true, false, true);
+}
+
+function myAlert(description,textdescription,textimage,imagesize, outsideClick, showCancel, showConfirm, alertType) {
+  if ( !outsideClick ) outsideClick = false;
+  if ( !showCancel )   showCancel = false;
+  if ( !showConfirm )  showConfirm = false;
+  if ( imagesize == "" ) { imagesize = "80x80"; }
+  swal({
+    title: description,
+    text: textdescription,
+    imageUrl: textimage,
+    imageSize: imagesize,
+    allowOutsideClick: outsideClick,
+    showConfirmButton: showConfirm,
+    showCancelButton: showCancel,
+    type: alertType,
+    html: true
+  });
+}
+
 </script>
 
-> help
+<span id='update' hidden><font color='red'>An update to this plugin is available</font><br><br></span>
+
+> Note that certain hardware combinations may actually result in lower speeds when utilizing Turbo (read / reconstruct) mode
 
 <dl>
 <dt>Enable Automatic Turbo Mode:</dt>
@@ -145,3 +177,6 @@ function applySettings() {
 <dd><span id='turboOn'><font color='red'>Script Not Running</font></span></dd>
 </dl>
 <span id='miscScript'></span>
+
+<center><b>For support for this plugin, visit <a href='https://forums.lime-technology.com/topic/55671-plugin-ca-auto-turbo-write-mode/'>HERE</a></center>
+<a href="Settings/caHelp" target='_blank'>CA Manual</a><a style='float:right;cursor:pointer' onclick='showCredits();'>Credits</a><br><br></span>
