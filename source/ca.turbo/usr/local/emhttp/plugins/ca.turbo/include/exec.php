@@ -46,19 +46,26 @@ switch ($_POST['action']) {
     echo "Settings Updated";
     break;
   case 'status':
-    if ( is_file($turboPaths['backgroundPID']) ) {
-      $status = readJsonFile($turboPaths['status']);
-    }
-    if ( ! $status ) {
+    $status = readJsonFile($turboPaths['status']);
+    if ( (! is_file($turboPaths['backgroundPID']) ) && (! $status['override'] ) ) {
       $unRaidVars = parse_ini_file("/var/local/emhttp/var.ini");
       if ($unRaidVars['md_write_method'] == "1") {
         $status['mode'] = "turbo";
       }
     }
     $spunDown = ( $status ) ? $status['spundown'] : "<font color=red>Script Not Running</font>";
+
     $o = "<script>";
     $o .= "  $('#spunDown').html('$spunDown');";
     $msg = ($status['mode'] == "turbo") ? "Turbo (Reconstruct Write)" : "Normal (Read/Modify/Write)";
+    
+    if ( $status['override'] ) {
+      $msg .= "  Autoscript overridden";
+    }
+    if ( (! is_file($turboPaths['backgroundPID']) ) && (! $status['override'] ) ) {
+      $msg = "unRaid Determined";
+    }
+
     $o .= "  $('#turboOn').html('$msg');";
     if ( is_file($turboPaths['backgroundPID']) ) {
       $o .= "  $('#running').html('<font color=green>Running</font>');";
