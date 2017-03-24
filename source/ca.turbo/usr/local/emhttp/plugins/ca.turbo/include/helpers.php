@@ -58,9 +58,6 @@ function logger($string) {
   global $debug;
   
   exec("logger ".escapeshellarg($string));
-  if ($debug) {
-    echo "$string\n";
-  }
 }
 
 ##################################################################

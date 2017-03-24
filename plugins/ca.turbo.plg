@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.03.14">
-<!ENTITY md5       "3b8ce48ec914c925ca9b6898dd5dfd43">
+<!ENTITY version   "2017.03.24">
+<!ENTITY md5       "ac8488eeeac4c82ead741278f691be8e">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
+###2017.03.24
+- Fix Debug Mode logging not working when started from GUI
+
 ###2017.03.14
 - Support a user script to force modes on a schedule (see support thread)
 
