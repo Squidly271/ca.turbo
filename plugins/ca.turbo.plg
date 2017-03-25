@@ -75,6 +75,7 @@ The 'post-install' script
 <?
   echo "Checking for running background process\n";
   exec("mkdir -p /tmp/ca.turbo");
+  exec("mkdir -p /tmp/ca.turbo/otherPIDs");
   if ( is_file("/tmp/ca.turbo/PID") ) {
     echo "Stopping CA Auto Turbo Mode\n";
     $PID = file_get_contents("/tmp/ca.turbo/PID");
