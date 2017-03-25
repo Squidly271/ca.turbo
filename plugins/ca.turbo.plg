@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.03.24">
-<!ENTITY md5       "ac8488eeeac4c82ead741278f691be8e">
+<!ENTITY version   "2017.03.25">
+<!ENTITY md5       "ba84deb57f386005a20762a0582b8d9a">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
+###2017.03.25
+- Added in scheduling to force turbo mode off / on
+
 ###2017.03.24
 - Fix Debug Mode logging not working when started from GUI
 

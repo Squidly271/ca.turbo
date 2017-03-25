@@ -52,6 +52,7 @@ $(function() {
     $('#<?=$key?>').val("<?=$cfg[$key]?>");
   <?endforeach;?>
   
+  
   setInterval(function() {
     $.post(URL,{action:'status'},function(data) {
       if (data) {
@@ -59,9 +60,24 @@ $(function() {
       }
     });
   },3000);
+  $.post(URL,{action:'initSchedule'}, function(data) {
+    if (data) {
+      $("#schedule").html(data);
+      $(".schedules").change(function() { changeApply(); });
+    }
+  });
 });
 
 function changeApply() {
+  var schedule = getSchedules();
+  $.post(URL,{action:'validateSchedule',schedule:schedule},function(data) {
+    if ( data != "ok" ) {
+      $("#debugging").html(data);
+      $("#applyButton").prop("disabled",true);
+      return;
+    }
+  });
+  
   var enabled = $("#enabled").val();
   if ( enabled == "no" ) {
     $(".settings").each(function() {
@@ -79,7 +95,6 @@ function changeApply() {
 
 function getSettings() {
   var settings = new Array();
-  
   $(".settings").each(function() {
     var id = $(this).attr("id");
     var set = $(this).val();
@@ -88,11 +103,20 @@ function getSettings() {
   });
   return settings;
 }
-    
+
+function getScheduleX(x) {
+  var enabled = $("#enabled" + x).val();
+  var turbo = $("#turbo" + x).val();
+  var cron = $("#cron" + x).val();
+  var duration = $("#duration" + x).val();
+  
+  return new Array(enabled,turbo,cron,duration);
+}
+
 function applySettings() {
   var settings = getSettings();
-  
-  $.post(URL,{action:'apply',settings:settings},function(data) {
+  var schedule = getSchedules();
+  $.post(URL,{action:'apply',settings:settings,schedule:schedule},function(data) {
     if (data) {
       $("#applyButton").prop("disabled",true);
       $("#debugging").html(data);
@@ -101,7 +125,7 @@ function applySettings() {
 }
 
 function showCredits() {
-  myAlert("CA Auto Turbo Mode","<?=$caCredits?>","/plugins/<?=$plugin?>/images/turbo.png","40x40", true, false, true);
+  myAlert("CA Auto Turbo Mode","<?=$caCredits?>","/plugins/<?=$plugin?>/images/ca.turbo.png","96x96", true, false, true);
 }
 
 function myAlert(description,textdescription,textimage,imagesize, outsideClick, showCancel, showConfirm, alertType) {
@@ -121,14 +145,73 @@ function myAlert(description,textdescription,textimage,imagesize, outsideClick, 
     html: true
   });
 }
+function getSchedules(ignore = "-1") {
+  allSchedules = new Array();
+  for ( x = 0; x < 100; x++) {
+    if ( x == ignore ) {
+      continue;
+    }
+    if ( $(".schedule" + x).length > 0 ) {
+      allSchedules.push(getScheduleX(x));
+    }
+  }
+  return allSchedules;
+}
+
+function addSchedule() {
+  var allSchedules = getSchedules();
+  $.post(URL,{action:'addSchedule',schedule:allSchedules},function(data) {
+    if (data) {
+      $("#schedule").html(data);
+      $(".schedules").change(function() { changeApply(); });
+      changeApply();
+    }
+  });
+}
+
+function deleteSchedule(x) {
+  var allSchedules = getSchedules(x);
+  $.post(URL,{action:'showSchedule',schedule:allSchedules}, function(data) {
+    if (data) {
+      $("#schedule").html(data);
+      $(".schedules").change(function() { changeApply(); });
+      changeApply();
+    }
+  });
+}
+function showSchedule() {
+  var allSchedules = getSchedules();
+  $.post(URL,{action:'showSchedule',schedule:allSchedules}, function(data) {
+    if (data) {
+      $("#schedule").html(data);
+      $(".schedules").change(function() { changeApply(); });
+    }
+  });
+}
+
+function killSchedule() {
+  $("#killSchedule").prop("disabled",true);
+  $.post(URL,{action:'killSchedule'});
+}
 
 </script>
 
 <span id='update' hidden><font color='red'>An update to this plugin is available</font><br><br></span>
+
 <strong><font color='purple' size='3'>CA Auto Turbo Write Mode</font> will enable / disable <em>Turbo Write Mode (reconstruct write)</em> based upon the number of hard drives currently spun down.  For a good explanation of turbo write mode, see <a href='https://forums.lime-technology.com/topic/50397-turbo-write/#comment-496144' target='_blank'>HERE</a><br></strong>
 
 > Note that certain hardware combinations may actually result in lower speeds when utilizing Turbo (reconstruct) mode
 
+<b>Current Status:</b>
+<dl>
+<dt>Data Drives Spun Down: (as of last poll)</dt>
+<dd><span id='spunDown'><font color='red'>Script Not Running</font></span></dd>
+<dt>Write Mode:</dt>
+<dd><span id='turboOn'><font color='red'>Script Not Running</font></span></dd>
+<dt>&nbsp;</dt><dd><input type='button' value='Kill Running Schedules' id='killSchedule' disabled onclick='killSchedule();'></dd>
+</dl>
+<hr>
+<font color='purple' size='2'>Automatic Switching Options</font>
 <dl>
 <dt>Enable Automatic Turbo Mode:</dt>
 <dd>
@@ -139,7 +222,7 @@ function myAlert(description,textdescription,textimage,imagesize, outsideClick, 
 </dd>
 </dl>
 
-> Enable Or Disable This Plugin
+> Enable Or Disable Automatic Switching
 
 <dl>
 <dt>Disks Allowed To Be Spun Down Before Invoking Turbo Mode:</dt>
@@ -176,17 +259,24 @@ function myAlert(description,textdescription,textimage,imagesize, outsideClick, 
 
 > Enable for additional debugging information to be logged
 
-<input type='button' onclick='applySettings();' value='Apply' id='applyButton'><input type='button' onclick='done();' value='Done'>
-<span id='debugging'></span>
+
 <br><br>
-<b>Current Status:</b>
-<dl>
-<dt>Data Drives Spun Down:</dt>
-<dd><span id='spunDown'><font color='red'>Script Not Running</font></span></dd>
-<dt>Write Mode:</dt>
-<dd><span id='turboOn'><font color='red'>Script Not Running</font></span></dd>
-</dl>
+
 <span id='miscScript'></span>
 
-<center><b>For support for this plugin, visit <a href='https://forums.lime-technology.com/topic/55671-plugin-ca-auto-turbo-write-mode/'>HERE</a></center>
+<font color='purple' size='2'>Scheduling Options</font>
+> Each schedule has the following options:<br><br>
+> <b>Schedule Enabled</b> - Enables or disables this schedule<br>
+> <b>Enable or Disable Turbo Write</b> - Forces turbo write on or off (automatic swithing (if enabled) will be turned off<br>
+> <b>Cron Time to Run</b> - A standard Cron entry dictating when to run.  (see <a href='http://www.corntab.com/' target='_blank'>HERE</a> for examples)<br>
+> <b>Duration in Minutes</b> - Time to use the forced setting.  After expiration of the time period, automatic switching (if enabled) will begin again.<br>
+
+<div id='schedule'>
+</div><br>
+<input type='button' value='Add Schedule' onclick='addSchedule();'>
+
+<input type='button' onclick='applySettings();' value='Apply' id='applyButton'><input type='button' onclick='done();' value='Done'>
+<br><span id='debugging'></span>
+
+<center><b>For support for this plugin, visit <a href='https://forums.lime-technology.com/topic/55671-plugin-ca-auto-turbo-write-mode/' target='_blank'>HERE</a></center>
 <a style='float:right;cursor:pointer' onclick='showCredits();'>Credits</a><br><br></span>

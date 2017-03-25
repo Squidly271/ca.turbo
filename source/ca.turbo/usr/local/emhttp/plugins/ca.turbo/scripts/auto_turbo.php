@@ -62,6 +62,12 @@ if ( is_file($turboPaths['backgroundPID']) ) {
   return;
 }
 
+$dirContents = array_diff(@scandir("/tmp/ca.turbo/otherPIDs"),array(".",".."));
+if ( ! empty($dirContents) ) {
+  logger("CA Auto Turbo Schedules currently in process");
+  return;
+}
+
 exec("mkdir -p /tmp/ca.turbo/");
 $MyPID = getmypid();
 file_put_contents($turboPaths['backgroundPID'],"$MyPID");

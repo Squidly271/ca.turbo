@@ -82,4 +82,38 @@ function setTurbo() {
 function setNormal() {
   exec("/usr/local/sbin/mdcmd set md_write_method 0");
 }
+
+# creates the HTML for a schedule
+
+function createSchedule($index,$schedule) {
+  if ( $schedule[3] < 1 ) {
+    $schedule[3] = 60;
+  }
+  $o = "
+    <strong>Schedule Number: $index</font>  <img src='/plugins/dynamix.docker.manager/images/remove.png' width='20px' onclick=deleteSchedule('$index'); style='cursor:pointer' title='Delete This Schedule'></strong>
+    <dl>
+    <dt>Schedule Enabled:</dt>
+    <dd><select class='schedule$index schedules' id='enabled$index'>
+        <option value='yes'>Yes</option>
+        <option value='no' selected>No</option>
+        </select></dd>
+    <dt>Enable or Disable Turbo Write:</dt>
+    <dd><select class='schedule$index schedules' id='turbo$index'>
+        <option value='enable'>Enable</option>
+        <option value='disable'>Disable</option>
+        </select></dd>
+    <dt>Cron time to run:</dt>
+    <dd><input type='text' class='narrow schedule$index schedules' placeholder='Cron Expression' id='cron$index'></dd>
+    <dt>Duration to enable / disable (minutes):</dt>
+    <dd><input type='number' class='narrow schedule$index schedules' placeholder='Duration in minutes' id='duration$index'></dd>
+    </dl>
+    <script>
+      $('#enabled$index').val('{$schedule[0]}');
+      $('#turbo$index').val('{$schedule[1]}');
+      $('#cron$index').val('{$schedule[2]}');
+      $('#duration$index').val('{$schedule[3]}');
+    </script>
+  ";
+  return $o;
+}
 ?>
