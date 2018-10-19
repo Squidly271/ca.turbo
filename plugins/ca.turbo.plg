@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.11.23">
-<!ENTITY md5       "384d54a0debc88a644f15e2006003eaf">
+<!ENTITY version   "2018.10.19">
+<!ENTITY md5       "415a255f61fb4ba5bf8c595c92b785a3">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
+###2018.10.19
+- Fix Broken Pipe
+
 ###2017.11.23
 - Reorganization as part of updates to CA proper
 
@@ -57,7 +60,7 @@
 <FILE Run="/bin/bash">
 <INLINE>
 # Remove old 'source' files
-rm -f $(ls /boot/config/plugins/&name;/&name;*.txz 2>/dev/null|grep -v '&version;')
+rm -f $(ls /boot/config/plugins/&name;/&name;*.txz 2>/dev/null &#124; grep -v '&version;')
 </INLINE>
 </FILE>
 
