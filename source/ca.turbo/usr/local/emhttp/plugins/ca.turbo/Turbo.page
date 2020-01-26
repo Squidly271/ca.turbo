@@ -3,12 +3,12 @@ Title="TurboWrite"
 Icon="tachometer"
 ---
 <?
-###################################
-#                                 #
-# CA Automatic Turbo Mode         #
-# Copyright 2017, Andrew Zawadzki #
-#                                 #
-###################################
+########################################
+#                                      #
+# CA Automatic Turbo Mode              #
+# Copyright 2017-2020, Andrew Zawadzki #
+#                                      #
+########################################
 
 $plugin = "ca.turbo";
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/caCredits.php");
@@ -66,6 +66,9 @@ $(function() {
       $(".schedules").change(function() { changeApply(); });
     }
   });
+	if ( typeof caPluginUpdateCheck === "function" ) {
+		caPluginUpdateCheck("ca.turbo.plg",{name:"Auto Turbo Mode"});
+	}
 });
 
 function changeApply() {
@@ -228,7 +231,7 @@ function killSchedule() {
 <dt>Disks Allowed To Be Spun Down Before Invoking Turbo Mode:</dt>
 <dd>
 <select class='settings' id='maxSpunDown' onchange='changeApply();'>
-<?for($i=0; $i <= 10; $i++):?>
+<?for($i=0; $i <= $totalDisks; $i++):?>
   <?$number = $i == 0 ? "0" : $i?>
   <option value="<?=$i?>"><?=$number?></option>
 <?endfor;?>
