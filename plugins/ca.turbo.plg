@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2020.01.26">
-<!ENTITY md5       "42f112ba5fdde6e42455189a0c6186fc">
+<!ENTITY version   "2020.10.21">
+<!ENTITY md5       "087d6ec0db32ae1cbf900041d11decec">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon='tachometer'>
 
 <CHANGES>
+###2020.10.21
+- Compatibility Fixes
+
 ###2020.01.26
 - Fixed: Only max 10 disks were allowed to be spun down
 
