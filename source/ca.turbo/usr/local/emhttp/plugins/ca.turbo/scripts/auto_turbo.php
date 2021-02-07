@@ -77,12 +77,19 @@ while (true) {
   $validDisks = getDisks();
   $totalSpunDown = 0;
   foreach ($validDisks as $disk) {
-    $result = shell_exec("hdparm -C /dev/{$disk['device']}");
-    if ( $debug ) {
-      logger($result);
-    }
-    if ( ! strpos($result,"active") ) {
-      $totalSpunDown++;
+    if ( file_exists("/usr/local/sbin/sdspin") ) {
+      exec("/usr/local/sbin/sdspin /dev/{$disk['device']}",$out,$ret);
+      if ( $ret == 2 ) {
+        $totalSpunDown++;
+      }
+    } else {
+      $result = shell_exec("hdparm -C /dev/{$disk['device']}");
+      if ( $debug ) {
+        logger($result);
+      }
+      if ( ! strpos($result,"active") ) {
+        $totalSpunDown++;
+      }
     }
   }
   if ( $debug ) {
