@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2021.02.16">
-<!ENTITY md5       "492d12de323116c1c7dededfe97076ce">
+<!ENTITY version   "2021.03.10">
+<!ENTITY md5       "61dfa404186bbd6f1e5a59298a426ee4">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon='tachometer'>
 
 <CHANGES>
+###2021.03.10
+- Permission fixes
+
 ###2021.02.16
 - Detect SAS status if SAS spindown plugin installed (Thanks @doron)
 
