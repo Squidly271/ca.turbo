@@ -90,7 +90,7 @@ function createSchedule($index,$schedule) {
     $schedule[3] = 60;
   }
   $o = "
-    <strong>Schedule Number: $index</font>  <img src='/plugins/dynamix.docker.manager/images/remove.png' width='20px' onclick=deleteSchedule('$index'); style='cursor:pointer' title='Delete This Schedule'></strong>
+    <strong>Schedule Number: $index</font>  <i class='fa fa-window-close' width='20px' onclick=deleteSchedule('$index'); style='cursor:pointer;color:#880000' title='Delete This Schedule'></i></strong>
     <dl>
     <dt>Schedule Enabled:</dt>
     <dd><select class='schedule$index schedules' id='enabled$index'>

@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2021.03.10">
-<!ENTITY md5       "61dfa404186bbd6f1e5a59298a426ee4">
+<!ENTITY version   "2022.09.16">
+<!ENTITY md5       "f10404aaea7b51863ab3e47bf66de7b0">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon='tachometer'>
 
 <CHANGES>
+###2022.09.16
+- Remove schedule icon missing on later versions of Unraid
+
 ###2021.03.10
 - Permission fixes
 
