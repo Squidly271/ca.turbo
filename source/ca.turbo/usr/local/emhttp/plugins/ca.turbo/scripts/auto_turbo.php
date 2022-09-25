@@ -3,7 +3,7 @@
 ###################################
 #                                 #
 # CA Automatic Turbo Mode         #
-# Copyright 2021, Andrew Zawadzki #
+# Copyright 2022, Andrew Zawadzki #
 #                                 #
 ###################################
 

@@ -1,13 +1,14 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
-<!ENTITY name      "ca.turbo">
-<!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2022.09.16">
-<!ENTITY md5       "f10404aaea7b51863ab3e47bf66de7b0">
-<!ENTITY launch    "Settings/Turbo">
-<!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
-<!ENTITY github    "Squidly271/ca.turbo">
-<!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
+<!ENTITY name         "ca.turbo">
+<!ENTITY author       "Andrew Zawadzki">
+<!ENTITY currentYear  "2022">
+<!ENTITY version      "&currentYear;.09.16">
+<!ENTITY md5          "f10404aaea7b51863ab3e47bf66de7b0">
+<!ENTITY launch       "Settings/Turbo">
+<!ENTITY plugdir      "/usr/local/emhttp/plugins/&name;">
+<!ENTITY github       "Squidly271/ca.turbo">
+<!ENTITY pluginURL    "https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon='tachometer'>
@@ -121,7 +122,7 @@ The 'post-install' script
   echo ""
   echo "----------------------------------------------------"
   echo " &name; has been installed."
-  echo " Copyright 2017-2020, Andrew Zawadzki"
+  echo " Copyright 2017-&currentYear;, &author;"
   echo " Version: &version;"
   echo "----------------------------------------------------"
   echo ""
