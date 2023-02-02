@@ -19,6 +19,7 @@ switch ($_POST['action']) {
     file_put_contents("/boot/config/plugins/ca.turbo/settings.ini",create_ini_file($settings));
 # create the cron schedule    
     writeJsonFile($turboPaths['schedule'],$rawSchedule);
+		$cronFile = "";
     if ( is_array($rawSchedule) ) {
       foreach ($rawSchedule as $schedule) {
         if ( $schedule[0] == "no" ) {
@@ -109,6 +110,7 @@ switch ($_POST['action']) {
     }
 
     $index = 0;
+		$o = "";
     foreach ($rawSchedule as $schedule) {
       $o .= createSchedule($index,$schedule);
       $o .= "<hr>";
@@ -123,6 +125,7 @@ switch ($_POST['action']) {
       $rawSchedule = array();
     }
     $index = 0;
+		$o = "";
     foreach ($rawSchedule as $schedule) {
       $o .= createSchedule($index,$schedule);
       $o .= "<hr>";
@@ -139,6 +142,7 @@ switch ($_POST['action']) {
       $rawSchedule = array();
     }
     $index = 0;
+		$o = "";
     foreach ($rawSchedule as $schedule) {
       $o .= createSchedule($index,$schedule);
       $o .= "<hr>";
@@ -155,6 +159,7 @@ switch ($_POST['action']) {
       $rawSchedule = array();
     }
     $index = 0;
+		$status = "";
     foreach ($rawSchedule as $schedule) {
       if ( $schedule[0] == "yes" ) {
         if ( ! trim($schedule[2]) ) {

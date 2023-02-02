@@ -34,6 +34,7 @@ function getPluginSettings() {
 
 $cfg = getPluginSettings();
 
+$totalDisks = 0;
 $unRaidDisks = parse_ini_file("/var/local/emhttp/disks.ini",true);
 foreach ($unRaidDisks as $disk) {
   if ( (strpos($disk['name'],"disk") === 0 ) && ($disk['size']) ) {
