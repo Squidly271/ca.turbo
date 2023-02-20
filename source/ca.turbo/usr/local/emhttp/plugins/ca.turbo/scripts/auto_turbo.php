@@ -1,11 +1,10 @@
 #!/usr/bin/php
 <?PHP
-###################################
-#                                 #
-# CA Automatic Turbo Mode         #
-# Copyright 2021, Andrew Zawadzki #
-#                                 #
-###################################
+###########################################################
+#                                                         #
+# CA Auto Turbo Mode copyright 2017-2023, Andrew Zawadzki #
+#                                                         #
+###########################################################
 
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/helpers.php");
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/paths.php");
@@ -96,7 +95,7 @@ while (true) {
     logger("Total Spundown: $totalSpunDown");
   }
   if ($totalSpunDown > $settings['maxSpunDown'] ) {
-    $currentMode = $currentMode ? $currentMode : "turbo";
+    $currentMode = $currentMode ?? "turbo";
     if ( $currentMode == "turbo" ) {
       if ( $debug ) {
         logger("Entering Normal Mode");
@@ -105,7 +104,7 @@ while (true) {
       $currentMode = "normal";
     }
   } else {
-    $currentMode = $currentMode ? $currentMode : "normal";
+    $currentMode = $currentMode ?? "normal";
     if ( $currentMode == "normal" ) {
       if ( $debug ) {
         logger("Entering Turbo Mode");

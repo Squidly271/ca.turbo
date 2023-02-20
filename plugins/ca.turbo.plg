@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2023.02.02">
-<!ENTITY md5       "44b7ed66aac53fbede2f2759aa3f9cd5">
+<!ENTITY version   "2023.02.20">
+<!ENTITY md5       "6d7c337cb8a2fdb1661a466f42a5dcb8">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon='tachometer'>
 
 <CHANGES>
+###2023.02.20
+- PHP8 Compliance
+
 ###2023.02.02
 - PHP8 compliance
 
@@ -124,7 +127,7 @@ The 'post-install' script
   echo ""
   echo "----------------------------------------------------"
   echo " &name; has been installed."
-  echo " Copyright 2017-2020, Andrew Zawadzki"
+  echo " Copyright 2017-2023, Andrew Zawadzki"
   echo " Version: &version;"
   echo "----------------------------------------------------"
   echo ""

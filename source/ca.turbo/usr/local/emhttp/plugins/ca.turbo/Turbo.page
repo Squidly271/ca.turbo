@@ -3,12 +3,11 @@ Title="TurboWrite"
 Icon="tachometer"
 ---
 <?
-########################################
-#                                      #
-# CA Automatic Turbo Mode              #
-# Copyright 2017-2021, Andrew Zawadzki #
-#                                      #
-########################################
+###########################################################
+#                                                         #
+# CA Auto Turbo Mode copyright 2017-2023, Andrew Zawadzki #
+#                                                         #
+###########################################################
 
 $plugin = "ca.turbo";
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/caCredits.php");
