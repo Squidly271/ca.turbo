@@ -77,7 +77,7 @@ switch ($_POST['action']) {
     $o .= "  $('#spunDown').html('$spunDown');";
     $msg = ($status['mode'] == "turbo") ? "Turbo (Reconstruct Write)" : "Normal (Read/Modify/Write)";
     
-    if ( $status['override'] ) {
+    if ( $status['override'] ?? false ) {
       $msg .= "  Autoscript overridden";
     }
     if ( (! is_file($turboPaths['backgroundPID']) ) && (! $status['override'] ) ) {

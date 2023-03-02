@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2023.02.20">
-<!ENTITY md5       "6d7c337cb8a2fdb1661a466f42a5dcb8">
+<!ENTITY version   "2023.03.02">
+<!ENTITY md5       "2eea9b827685afb6da58da06c5a6d518">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon='tachometer'>
 
 <CHANGES>
+###2023.03.02
+- PHP8 Upgrades
+
 ###2023.02.20
 - PHP8 Compliance
 

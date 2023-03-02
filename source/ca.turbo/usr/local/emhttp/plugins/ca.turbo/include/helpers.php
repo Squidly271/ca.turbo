@@ -17,10 +17,11 @@ function getPost($setting,$default) {
 }
 
 function getPostArray($setting) {
-  return $_POST[$setting];
+  return $_POST[$setting] ?? null;
 }
 
 function create_ini_file($settings,$mode=false) {
+	$iniFile = "";
   if ( $mode ) {
     $keys = array_keys($settings);
 
