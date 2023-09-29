@@ -9,6 +9,7 @@
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/helpers.php");
 require_once("/usr/local/emhttp/plugins/ca.turbo/include/paths.php");
 
+/usr/local/sbin/update_cron
 $settings = getPluginSettings();
 if ($settings['enabled'] == "yes") {
   logger("Starting CA Auto Turbo Mode");
