@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.turbo">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2023.03.02">
-<!ENTITY md5       "2eea9b827685afb6da58da06c5a6d518">
+<!ENTITY version   "2023.09.30">
+<!ENTITY md5       "a95d97e4167e66b5e7d73df6f6394b1f">
 <!ENTITY launch    "Settings/Turbo">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.turbo">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon='tachometer'>
 
 <CHANGES>
+###2023.09.30
+- Changed: Run update_cron at array start (fixes issue with OS 6.12.4)
+
 ###2023.03.02
 - PHP8 Upgrades
 
